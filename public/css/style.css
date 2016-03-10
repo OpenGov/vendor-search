@@ -1,0 +1,23 @@
+html, body {
+   height: 100%;
+}
+#map { 
+   height: 100%; 
+   width: 100%;
+}
+
+.panel {
+   height: 60%;
+   margin-bottom:0px;
+}
+
+.map {
+   height: 40%;
+}
+
+.color_key {
+   float:left;
+   height:22px; 
+   width: 8px;
+   margin-right: 8px;
+}
