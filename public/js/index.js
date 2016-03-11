@@ -1,22 +1,5 @@
-var max = 	3500000;
+var max = 3500000;
 
-var scale = d3.scale.linear()
-   .domain([0, max])
-   .range([100, 8000]);
-
-var color_scale = chroma.bezier(['D5F4BB', '#0C5314'])
-
-
-var scale2 = d3.scale.linear()
-   .domain([0,max])
-   .range([0, 1]);
-
- var scale3 = d3.scale.linear()
-    .domain([0,max])
-    .range([0.2, 0.5]);
-
-
-console.log(color_scale(scale2(80000)).hex())
 
 var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
@@ -40,6 +23,7 @@ var circle = {
     fillOpacity: 0.3
 };
 
+
 L.geoJson(data, {
    pointToLayer: function (feature, latlng) {
       console.log(latlng)
@@ -51,6 +35,25 @@ L.geoJson(data, {
       $("#table").find("tbody").append(row)
 
       var total = feature.properties.total;
+
+      if (total > max) {
+        max = total;
+      }
+
+      var scale = d3.scale.linear()
+         .domain([0, max])
+         .range([100, 7000]);
+
+      var color_scale = chroma.bezier(['D5F4BB', '#0C5314'])
+
+      var scale2 = d3.scale.linear()
+         .domain([0,max])
+         .range([0, 1]);
+
+       var scale3 = d3.scale.linear()
+          .domain([0,max])
+          .range([0.2, 0.5]);
+
       console.log("scale it: ", scale(total))
 
       var color = color_scale(scale2(total)).hex();
