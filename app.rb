@@ -21,22 +21,26 @@ LIST_OF_ENTITIES = {
   'columbianaoh' => {
     'report_name' => 'Checkbook',
     'longitude' => '-80.69396429999999',
-    'latitude' => '40.88839309999999'
+    'latitude' => '40.88839309999999',
+    'population' => '6323'
   },
   'claytonoh' => {
     'report_name' => 'Checkbook',
     'longitude' => '-84.3605022',
-    'latitude' => '39.8631101'
+    'latitude' => '39.8631101',
+    'population' => '13213'
   },
   'cuyahogafallsoh' => {
     'report_name' => 'Transactions',
     'longitude' => '-81.48455849999999',
-    'latitude' => '41.1339449'
+    'latitude' => '41.1339449',
+    'population' => '49267'
   },
   'brookvilleoh' => {
     'report_name' => 'Checkbook',
     'longitude' => '-84.4113366',
-    'latitude' => '39.8367207'
+    'latitude' => '39.8367207',
+    'population' => '5884'
   },
   'bexleyoh' => {
     'report_name' => 'Checkbook Bexley',
@@ -153,11 +157,12 @@ LIST_OF_ENTITIES = {
     'longitude' => '-81.4663042',
     'latitude' => '41.6593455'
   },
-  'hamiltonoh' => {
-    'report_name' => 'Hamilton_OH_2015.06.09',
-    'longitude' => '-84.6305353',
-    'latitude' => '39.3959952'
-  },
+  # No public reports
+  # 'hamiltonoh' => {
+  #   'report_name' => 'Hamilton_OH_2015.06.09',
+  #   'longitude' => '-84.6305353',
+  #   'latitude' => '39.3959952'
+  # },
   'hillsborooh' => {
     'report_name' => 'Transactions',
     'longitude' => '-83.6471168',
@@ -275,9 +280,9 @@ def vendor_search(search_query)
       puts "Beginning with #{entity_name}"
       entity = OpenGov::Entity.find(entity_name)
       info_with_pop = entity.information(embed: 'population')
-      population = nil
+      population = data['population']
       if info_with_pop[:metrics]
-        population = entity.information(embed: 'population')[:metrics]['population']['years'].first['value']
+        population ||= entity.information(embed: 'population')[:metrics]['population']['years'].first['value']
       end
 
       name = entity.name
@@ -320,7 +325,7 @@ def vendor_search(search_query)
     end
   end
 
-  output
+  output.sort_by{ |k| k[1] }.reverse
 end
 
 def convert_to_geojson(results)
