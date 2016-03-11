@@ -2,20 +2,25 @@ var max = 	3500000;
 
 var scale = d3.scale.linear()
    .domain([0, max])
-   .range([30, 4000]);
+   .range([100, 8000]);
 
-var color_scale = chroma.scale("OrRd")
+var color_scale = chroma.bezier(['D5F4BB', '#0C5314'])
+
 
 var scale2 = d3.scale.linear()
    .domain([0,max])
    .range([0, 1]);
+
+ var scale3 = d3.scale.linear()
+    .domain([0,max])
+    .range([0.2, 0.5]);
+
 
 console.log(color_scale(scale2(80000)).hex())
 
 var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
 });
-
 
 var map = L.map('map').setView([40.2313150803688, -82.7325439453125], 8);
 
@@ -51,6 +56,8 @@ L.geoJson(data, {
       var color = color_scale(scale2(total)).hex();
 
       circle.fillColor = color;
+      circle.fillOpacity = scale3(total);
+      circle.opacity = scale3(total) + 0.3;
 
       var area = scale(total);
       var radius = Math.sqrt(area / Math.PI)
