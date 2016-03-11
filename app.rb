@@ -20,145 +20,173 @@ DATA_DIR = ENV['DATA_DIR'] || 'data'
 LIST_OF_ENTITIES = {
   'columbusoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-83.2102799',
     'latitude' => '39.808631'
   },
   'columbianaoh' => {
     'report_name' => 'Checkbook',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-80.69396429999999',
     'latitude' => '40.88839309999999',
     'population' => '6323'
   },
   'claytonoh' => {
     'report_name' => 'Checkbook',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-84.3605022',
     'latitude' => '39.8631101',
     'population' => '13213'
   },
   'cuyahogafallsoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'Name',
     'longitude' => '-81.48455849999999',
     'latitude' => '41.1339449',
     'population' => '49267'
   },
   'brookvilleoh' => {
     'report_name' => 'Checkbook',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-84.4113366',
     'latitude' => '39.8367207',
     'population' => '5884'
   },
   'bexleyoh' => {
     'report_name' => 'Checkbook Bexley',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-82.93768039999999',
     'latitude' => '39.9689532'
   },
   'stowoh' => {
     'report_name' => 'Checkbook',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-81.44038979999999',
     'latitude' => '41.1595005'
   },
   'streetsborooh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-81.3459405',
     'latitude' => '41.2392227'
   },
   'wellstonoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-82.53293769999999',
     'latitude' => '39.1234054'
   },
   'worthingtonoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'Name',
     'longitude' => '-83.017962',
     'latitude' => '40.0931191'
   },
   'toledooh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-83.55521200000001',
     'latitude' => '41.6639383'
   },
   'ketteringoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-84.1688274',
     'latitude' => '39.68950359999999'
   },
   'pataskalaoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-82.6743341',
     'latitude' => '39.9956193'
   },
   'columbusoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-82.99879419999999',
     'latitude' => '39.9611755'
   },
   'tallmadgeoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'name',
     'longitude' => '-81.441779',
     'latitude' => '41.1014451'
   },
   'northcantonoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-81.4023356',
     'latitude' => '40.875891'
   },
   'wapakonetaoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'name',
     'longitude' => '-84.1935594',
     'latitude' => '40.5678265'
   },
   'belpreoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-81.5729029',
     'latitude' => '39.27396390000001'
   },
   'grandviewheightsoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-83.0407403',
     'latitude' => '39.9797863'
   },
   'chardonoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-81.2133262',
     'latitude' => '41.5786639'
   },
   'lakewoodoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'vendor',
     'longitude' => '-81.8388992',
     'latitude' => '41.4819932'
   },
   'allianceoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-81.1571478',
     'latitude' => '40.9117945'
   },
   'ashlandoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-82.3791289',
     'latitude' => '40.8671542'
   },
   'barbertonoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-81.6420968',
     'latitude' => '41.008796'
   },
   'bellefontaineoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'name',
     'longitude' => '-83.8458485',
     'latitude' => '40.3559636'
   },
   'bucyrusoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-83.0052713',
     'latitude' => '40.8077682'
   },
   'delawareoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'name',
     'longitude' => '-83.1056248',
     'latitude' => '40.2828612'
   },
   'eastlakeoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'name',
     'longitude' => '-81.4663042',
     'latitude' => '41.6593455'
   },
@@ -170,66 +198,78 @@ LIST_OF_ENTITIES = {
   # },
   'hillsborooh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'name',
     'longitude' => '-83.6471168',
     'latitude' => '39.2146192'
   },
   'hubbardoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'name',
     'longitude' => '-80.6001207',
     'latitude' => '41.1595698'
   },
   'huberheightsoh' => {
     'report_name' => 'Transactions V2',
+    'vendor_name' => 'name',
     'longitude' => '-84.1832889',
     'latitude' => '39.8588637'
   },
   'mansfieldoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'vendor',
     'longitude' => '-82.5936789',
     'latitude' => '40.7662998'
   },
   'massillonoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-81.6318358',
     'latitude' => '40.7743768'
   },
   'middletownoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-81.6318358',
     'latitude' => '40.7743768'
   },
   'montgomeryoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'name',
     'longitude' => '-84.3751818',
     'latitude' => '39.2472501'
   },
   'newalbanyoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'name',
     'longitude' => '-82.8678377',
     'latitude' => '40.0827607'
   },
   'newfranklinoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-81.6247023',
     'latitude' => '40.9495915'
   },
-  'northroyaltonoh' => {
-    'report_name' => 'North Royalton FY2013-FY2014 2015-06-17',
-    'longitude' => '-81.7799248',
-    'latitude' => '41.3137551'
-  },
+  # 'northroyaltonoh' => {
+  #   'report_name' => 'North Royalton FY2013-FY2014 2015-06-17',
+  #   'longitude' => '-81.7799248',
+  #   'latitude' => '41.3137551'
+  # },
   'portclintonoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-82.953299',
     'latitude' => '41.5095992'
   },
   'salemoh' => {
     'report_name' => 'Transactions2',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-80.8860602',
     'latitude' => '40.902369'
   },
   'sanduskyoh' => {
     'report_name' => 'Transactions',
+    'vendor_name' => 'vendor_name',
     'longitude' => '-82.7721684',
     'latitude' => '41.4550543'
   }
@@ -243,7 +283,6 @@ OpenGov::Client.authorize! access_token: ENV['OG_ACCESS_TOKEN']
 
 # Get a handle to redis
 $redis = Redis.new(host: REDIS_HOST, port: REDIS_PORT)
-
 
 ##### Helper Functions
 
@@ -301,7 +340,7 @@ def vendor_search(search_query)
         schema = report.schema
         next unless report.grid_report? &&
                     schema.meta['title'] == data['report_name']
-        query_results = schema.query filter: { all: { contains: search_query } }, limit: 10000000
+        query_results = schema.query filter: { data['vendor_name'].to_sym => { contains: search_query } }, limit: 10000000
         results_array = query_results['transactions'].map { |element| element['amount'].to_f }
 
         total = results_array.total_sum.to_f.round(2)
