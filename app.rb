@@ -1,15 +1,20 @@
 require 'sinatra'
-#require 'sinatra/reloader' if development?
-require 'tilt/erb'
+require "sinatra/json"
 
 require 'og_api'
 require 'redis'
-require 'array_stats'
 require 'csv'
 require 'json'
+require 'sanitize'
+require 'array_stats'
+
+##### Set up
+configure { set :server, :puma }
 
 REDIS_HOST = ENV['REDIS_HOST']
 REDIS_PORT = ENV['REDIS_PORT']
+
+DATA_DIR = ENV['DATA_DIR'] || 'data'
 
 LIST_OF_ENTITIES = {
   'columbusoh' => 'Transactions',
@@ -26,9 +31,11 @@ OpenGov::Client.default_options = {
 }
 OpenGov::Client.authorize! access_token: ENV['OG_ACCESS_TOKEN']
 
-
 # Get a handle to redis
 $redis = Redis.new(host: REDIS_HOST, port: REDIS_PORT)
+
+
+##### Helper Functions
 
 # Generate vendor search cache key
 def cache_key(entity_name, transaction_name, search_query)
@@ -109,8 +116,44 @@ def vendor_search(search_query)
   output
 end
 
+# Uses Google to perform auto complete
+# Request results look something like:
+# {"e"=>"OYbiVoDNKoLYjwPj2K_ACg",
+#  "c"=>0,
+#  "u"=>
+#   "https://www.google.com/complete/search?sclient=psy-ab&site=&source=hp&q=united&oq=&gs_l=&pbx=1&bav=on.2,or.&bvm=bv.116636494,d.cGc&fp=1&biw=1536&bih=740&dpr=1.25&pf=p&gs_rn=64&gs_ri=psy-ab&cp=3&gs_id=c&xhr=t&tch=1&ech=3&psi=DnviVpxgjIKPA-31t9AM.1457683214351.1",
+#  "p"=>true,
+#  "d"=>
+#  "[\"united\",[[\"united\\u003cb\\u003e airlines\\u003c\\/b\\u003e\",0,[131]],[\"united\\u003cb\\u003e healthcare\\u003c\\/b\\u003e\",0,[131]],[\"united\\u003cb\\u003e mileage plus\\u003c\\/b\\u003e\",0],[\"united\\u003cb\\u003e flight status\\u003c\\/b\\u003e\",0]],{\"j\":\"c\",\"q\":\"z2hPE9uyMfcs4IAy1YMdvZB7Cy4\",\"t\":{\"bpc\":false,\"phi\":0,\"tlw\":false}}]"
+# }
+# Where the suggestions are in the key "d", which is a JSON string embedded with HTML that needs to get sanitized.
+# The resulting array is the suggestions in order of greatest to least match
+#
+# Returns a hash of the requested query and its associated suggestions
+def fetch_matches(query)
+  raw_results = `curl -s 'https://www.google.com/complete/search?sclient=psy-ab&site=&source=hp&q=#{query}&oq=&gs_l=&pbx=1&bav=on.2,or.&bvm=bv.116636494,d.cGc&fp=1&biw=1536&bih=740&dpr=1.25&pf=p&gs_rn=64&gs_ri=psy-ab&cp=3&gs_id=c&xhr=t&tch=1&ech=3&psi=DnviVpxgjIKPA-31t9AM.1457683214351.1' -H 'Referer: https://www.google.com/' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/48.0.2564.116 Chrome/48.0.2564.116 Safari/537.36'`
+  parsed_results= JSON.parse(raw_results)
+
+  raw_suggestions = JSON.parse(parsed_results['d'])
+  puts raw_suggestions.inspect
+
+  parsed_suggestions = raw_suggestions[1].map(&:first).map do |html|
+    Sanitize.fragment(html)
+  end
+
+  {
+    query: query,
+    suggestions: parsed_suggestions
+  }
+end
+
+##### Routes
 get '/' do
   erb :index
+end
+
+get '/autocomplete' do
+  json(fetch_matches(params[:query]))
 end
 
 get '/search' do
