@@ -1,6 +1,6 @@
 require 'sinatra'
 #require 'sinatra/reloader' if development?
-require 'tilt/erb'
+require "sinatra/json"
 
 require 'og_api'
 require 'redis'
@@ -111,6 +111,10 @@ end
 
 get '/' do
   erb :index
+end
+
+get '/autocomplete' do
+  json(hello: 'world')
 end
 
 get '/search' do

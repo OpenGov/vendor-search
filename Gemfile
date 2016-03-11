@@ -5,3 +5,7 @@ gem 'array_stats'
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'redis', '~> 3.2', '>= 3.2.2'
+
+group 'development' do
+  gem 'pry'
+end
