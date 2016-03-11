@@ -1,10 +1,15 @@
 require 'sinatra'
+#require 'sinatra/reloader' if development?
+require 'tilt/erb'
+
 require 'og_api'
+require 'redis'
 require 'array_stats'
 require 'csv'
+require 'json'
 
-OpenGov::Client.authorize! access_token: ENV['OG_ACCESS_TOKEN']
-OpenGov::Client.default_options = { base: 'https://api.ogstaging.us/' }
+REDIS_HOST = ENV['REDIS_HOST']
+REDIS_PORT = ENV['REDIS_PORT']
 
 LIST_OF_ENTITIES = {
   'columbusoh' => 'Transactions',
@@ -15,10 +20,43 @@ LIST_OF_ENTITIES = {
   'bexleyoh' => 'Checkbook Bexley'
 }
 
+# OG API
+OpenGov::Client.default_options = {
+  base: 'https://api.ogstaging.us/',
+}
+OpenGov::Client.authorize! access_token: ENV['OG_ACCESS_TOKEN']
+
+
+# Get a handle to redis
+$redis = Redis.new(host: REDIS_HOST, port: REDIS_PORT)
+
+# Generate vendor search cache key
+def cache_key(entity_name, transaction_name, search_query)
+  "#{entity_name}.#{transaction_name}.#{search_query}"
+end
+
+# Assumes results is a hash
+def cache_save(key, results)
+  $redis.set(key, results.to_json)
+end
+
+# Returns a ruby hash or array
+def cache_get(key)
+  results = $redis.get(key)
+  results && JSON.parse(results)
+end
+
 def vendor_search(search_query)
   output = []
 
   LIST_OF_ENTITIES.each do |entity_name, transaction_name|
+    # Check if search is in cache
+    ckey = cache_key(entity_name, transaction_name, search_query)
+    cached_search = cache_get(ckey)
+
+    #  Skip search if cached
+    next output << cached_search if cached_search
+
     begin
       puts "Beginning with #{entity_name}"
       entity = OpenGov::Entity.find(entity_name)
@@ -45,7 +83,7 @@ def vendor_search(search_query)
         seventy_fifth = results_array.percentile(75)
         twenty_fifth = results_array.percentile(25)
 
-        output << [
+        results =  [
           name,
           total,
           population,
@@ -56,6 +94,11 @@ def vendor_search(search_query)
           longitude,
           latitude
         ]
+
+        output << results
+
+        # Save results to Redis cache
+        cache_save(ckey, results)
       end
     rescue StandardError => e
       puts "Error: #{entity_name} errored out"
