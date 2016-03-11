@@ -1,8 +1,8 @@
 html, body {
    height: 100%;
 }
-#map { 
-   height: 100%; 
+#map {
+   height: 100%;
    width: 100%;
 }
 
@@ -12,12 +12,12 @@ html, body {
 }
 
 .map {
-   height: 40%;
+   height: 50%;
 }
 
 .color_key {
    float:left;
-   height:22px; 
+   height:22px;
    width: 8px;
    margin-right: 8px;
 }

@@ -1,8 +1,8 @@
-var max = 80000;
+var max = 	3500000;
 
 var scale = d3.scale.linear()
    .domain([0, max])
-   .range([0, 3000]);
+   .range([30, 4000]);
 
 var color_scale = chroma.scale("OrRd")
 
@@ -17,7 +17,9 @@ var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.
 });
 
 
-var map = L.map('map').setView([39.9626487,-83.00349], 7);
+var map = L.map('map').setView([39.9626487,-83.00349], 8);
+
+var bounds = new L.Bounds();
 
 test = _.sortBy(data, "total");
 console.log(test);
@@ -35,7 +37,11 @@ var circle = {
 
 L.geoJson(data, {
    pointToLayer: function (feature, latlng) {
-      console.log(feature.properties)
+      console.log(latlng)
+      bounds.extend( latlng )
+      console.log(bounds)
+      //console.log(feature.properties)
+
       var row = $("<tr />")
       $("#table").find("tbody").append(row)
 
@@ -51,7 +57,6 @@ L.geoJson(data, {
       circle.radius = radius;
 
       _.each(feature.properties, function(prop, key){
-         console.log(key)
 
          var cell = $("<td class=" + key + ">" + prop + "</td>")
 
