@@ -17,7 +17,7 @@ var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.
 });
 
 
-var map = L.map('map').setView([39.9626487,-83.00349], 8);
+var map = L.map('map').setView([40.2313150803688, -82.7325439453125], 8);
 
 var bounds = new L.Bounds();
 
